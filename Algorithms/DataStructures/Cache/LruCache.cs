@@ -3,6 +3,7 @@ namespace Algorithms.DataStructures.Cache;
 /// <summary>
 /// Least Recently Used (LRU) cache implementation.
 /// </summary>
+
 /// <typeparam name="TKey">The type of the key (must be not null).</typeparam>
 /// <typeparam name="TValue">The type of the value.</typeparam>
 /// <remarks>
