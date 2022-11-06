@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="DesignPatterns\CommandPattern" />
+      <Folder Include="LowLevelSystems\ParkingLot" />
+    </ItemGroup>
+
 </Project>
