@@ -1,5 +1,8 @@
 namespace Algorithms.DataStructures.UnionFind;
 
+/// <summary>
+/// Quick Find is an eager approach, as we adjust the indexes during the union time.
+/// </summary>
 public class QuickFindUF
 {
     private int[] _vertices;
@@ -39,8 +42,13 @@ public class QuickFindUF
     /// <param name="vertex2"></param>
     public void Union(int vertex1, int vertex2)
     {
-        int vertex1Index = _vertices[vertex1];
-        int vertex2Index = _vertices[vertex2];
+        if (Connected(vertex1, vertex2))
+        {
+            return;
+        }
+        
+        var vertex1Index = _vertices[vertex1];
+        var vertex2Index = _vertices[vertex2];
 
         for (int index = 0; index < _vertices.Length; index++)
         {
