@@ -5,7 +5,7 @@ namespace Algorithms.DataStructures.UnionFind;
 /// </summary>
 public class QuickFindUF
 {
-    private int[] _vertices;
+    private readonly int[] _root;
     
     /// <summary>
     /// Set number of vertices and each vertex is assigned the index.
@@ -14,23 +14,15 @@ public class QuickFindUF
     /// <param name="numberOfVertices"></param>
     public QuickFindUF(int numberOfVertices)
     {
-        _vertices = new int[numberOfVertices];
+        _root = new int[numberOfVertices];
         for (var index = 0; index < numberOfVertices; index++)
         {
-            _vertices[index] = index;
+            _root[index] = index;
         }
     }
-
-    /// <summary>
-    /// Check whether vertex 1 an vertex 2 are in the same component.
-    /// Number of array access is 2. Takes O(1).
-    /// </summary>
-    /// <param name="vertex1"></param>
-    /// <param name="vertex2"></param>
-    /// <returns></returns>
-    public bool Connected(int vertex1, int vertex2)
-    {
-        return _vertices[vertex1] == _vertices[vertex2];
+    
+    public int Find(int vertex) {
+        return _root[vertex];
     }
 
     /// <summary>
@@ -42,20 +34,34 @@ public class QuickFindUF
     /// <param name="vertex2"></param>
     public void Union(int vertex1, int vertex2)
     {
-        if (Connected(vertex1, vertex2))
+        var rootOfVertex1 = Find(vertex1);
+        var rootOfVertex2 = Find(vertex2);
+        
+        //These vertices are already connected.s
+        if (rootOfVertex1 == rootOfVertex2)
         {
             return;
         }
         
-        var vertex1Index = _vertices[vertex1];
-        var vertex2Index = _vertices[vertex2];
-
-        for (int index = 0; index < _vertices.Length; index++)
+        for (int index = 0; index < _root.Length; index++)
         {
-            if (_vertices[index] == vertex1Index)
+            //All of the vertices that have root as root of vertex 2, change them to root of vertex 1.
+            if (_root[index] == rootOfVertex2)
             {
-                _vertices[index] = vertex2Index;
+                _root[index] = rootOfVertex1;
             }
         }
+    }
+    
+    /// <summary>
+    /// Check whether vertex 1 an vertex 2 are in the same component.
+    /// Number of array access is 2. Takes O(1).
+    /// </summary>
+    /// <param name="vertex1"></param>
+    /// <param name="vertex2"></param>
+    /// <returns></returns>
+    public bool Connected(int vertex1, int vertex2)
+    {
+        return Find(vertex1) == Find(vertex2);
     }
 }
